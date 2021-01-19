@@ -7,8 +7,8 @@
 import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
+
+import java.util.ArrayList;
 
 public class SAP {
 
@@ -39,7 +39,7 @@ public class SAP {
     private static Node shortestAncestor(int v, int w, Digraph g) {
         Node out;
         if (v == w) {
-            out = new Node(0, 0);
+            out = new Node(0, v);
             return out;
         }
         BreadthFirstDirectedPaths fromV = new BreadthFirstDirectedPaths(g, v);
@@ -88,8 +88,20 @@ public class SAP {
     private static Node shortestAncestorMultiple(Iterable<Integer> v, Iterable<Integer> w,
                                                  Digraph g) {
         Node out;
-        BreadthFirstDirectedPaths fromW = new BreadthFirstDirectedPaths(g, v);
-        BreadthFirstDirectedPaths fromV = new BreadthFirstDirectedPaths(g, w);
+        int count = 0;
+        int secondcount = 0;
+        for (Integer i : v) {
+            count++;
+        }
+        for (Integer i : w) {
+            secondcount++;
+        }
+        if (count == 0 || secondcount == 0) {
+            out = new Node(-1, -1);
+            return out;
+        }
+        BreadthFirstDirectedPaths fromW = new BreadthFirstDirectedPaths(g, w);
+        BreadthFirstDirectedPaths fromV = new BreadthFirstDirectedPaths(g, v);
         int min = Integer.MAX_VALUE;
         int ances = 0;
         for (int i = 0; i < g.V(); i++) {
@@ -100,7 +112,12 @@ public class SAP {
                 }
             }
         }
-        out = new Node(min, ances);
+        if (min == Integer.MAX_VALUE) {
+            out = new Node(-1, -1);
+        }
+        else {
+            out = new Node(min, ances);
+        }
         return out;
     }
 
@@ -146,12 +163,12 @@ public class SAP {
         In in = new In(args[0]);
         Digraph G = new Digraph(in);
         SAP sap = new SAP(G);
-        while (!StdIn.isEmpty()) {
-            int v = StdIn.readInt();
-            int w = StdIn.readInt();
-            int length = sap.length(v, w);
-            int ancestor = sap.ancestor(v, w);
-            StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
-        }
+        ArrayList<Integer> first = new ArrayList<>();
+        first.add(0);
+        first.add(1);
+        first.add(2);
+        ArrayList<Integer> second = new ArrayList<>();
+        System.out.println(sap.ancestor(first, second));
+
     }
 }

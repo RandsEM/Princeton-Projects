@@ -24,6 +24,7 @@ public class WordNet {
             throw new IllegalArgumentException();
         }
         this.map = new HashMap<>();
+        this.other = new HashMap<>();
         In syn = new In(synsets);
         In hyp = new In(hypernyms);
         while (syn.hasNextLine()) {
@@ -58,6 +59,15 @@ public class WordNet {
         Topological top = new Topological(this.graph);
         if (!top.hasOrder()) {
             throw new IllegalArgumentException();
+        }
+        int outs = 0;
+        for (int i = 0; i < this.graph.V(); i++) {
+            if (this.graph.outdegree(i) == 0) {
+                outs++;
+                if (outs > 1) {
+                    throw new IllegalArgumentException();
+                }
+            }
         }
         this.sap = new SAP(this.graph);
     }
@@ -102,6 +112,8 @@ public class WordNet {
     }
 
     public static void main(String[] args) {
+        System.out.println("faggot");
+        WordNet wd = new WordNet("synsets3.txt", "hypernyms3InvalidTwoRoots.txt");
     }
 
 }
