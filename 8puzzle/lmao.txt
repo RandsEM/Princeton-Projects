@@ -1,0 +1,26 @@
+            else{ // run the twin board
+                    SearchNode current=twinPq.delMin();
+                    if(current.getBoard().equals(solution)){
+                    this.solveAble=false;
+                    break;
+                    }
+                    if(current.getPrevious()==null){
+                    // means we are at the first enqueued node
+                    for(Board board:current.getBoard().neighbors()){
+                    SearchNode newNode=new SearchNode(board,current.getBoard(),
+                    current.getStep()+1);
+                    twinPq.insert(newNode);
+                    }
+                    }
+                    else{
+                    for(Board board:current.getBoard().neighbors()){
+                    if(!board.equals(current.getPrevious())){
+                    // enqueue only if they do not equal the previous
+                    SearchNode newNode=new SearchNode(board,current.getBoard(),
+                    current.getStep()+1);
+                    twinPq.insert(newNode);
+                    }
+                    }
+                    }
+                    which=!which;
+                    }
