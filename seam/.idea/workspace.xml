@@ -26,7 +26,7 @@
     <analyzeAfterCompile>true</analyzeAfterCompile>
     <toolWindowToFront>false</toolWindowToFront>
   </component>
-  <component name="ProjectId" id="1mzMx5LK0B9IwPWQ1t9woeaaoPB" />
+  <component name="ProjectId" id="1naolTd7kFnqEZJi04l2kPMXCrj" />
   <component name="ProjectViewState">
     <option name="abbreviatePackageNames" value="true" />
     <option name="autoscrollFromSource" value="true" />
@@ -37,15 +37,13 @@
     <option name="sortByType" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="ToolWindowMessages.ShowToolbar" value="false" />
     <property name="ToolWindowRun.ShowToolbar" value="false" />
-    <property name="settings.editor.selected.configurable" value="settings.saveactions" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
-    <configuration name="WordNet" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="WordNet" />
+    <configuration name="SeamCarver" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="SeamCarver" />
       <module name="Algorithms, Part II" />
       <method v="2" />
     </configuration>
@@ -63,29 +61,25 @@
     </todo-panel>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1301" height="229" key="GridCell.Tab.0.bottom" timestamp="1611090127346">
-      <screen x="1920" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1301" height="229" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611088130383" />
-    <state width="1301" height="229" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1611090127346" />
-    <state width="1301" height="229" key="GridCell.Tab.0.center" timestamp="1611090127346">
-      <screen x="1920" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1301" height="229" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611088130383" />
-    <state width="1301" height="229" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1611090127346" />
-    <state width="1301" height="229" key="GridCell.Tab.0.left" timestamp="1611090127346">
-      <screen x="1920" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1301" height="229" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611088130383" />
-    <state width="1301" height="229" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1611090127346" />
-    <state width="1301" height="229" key="GridCell.Tab.0.right" timestamp="1611090127346">
-      <screen x="1920" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1301" height="229" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1611088130383" />
-    <state width="1301" height="229" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1611090127346" />
-    <state x="781" y="252" width="672" height="678" key="search.everywhere.popup" timestamp="1610946310360">
+    <state width="1301" height="184" key="GridCell.Tab.0.bottom" timestamp="1612128645321">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="781" y="252" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1610946310360" />
+    <state width="1301" height="184" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1612128645321" />
+    <state width="1301" height="184" key="GridCell.Tab.0.center" timestamp="1612128645321">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1301" height="184" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1612128645321" />
+    <state width="1301" height="184" key="GridCell.Tab.0.left" timestamp="1612128645321">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1301" height="184" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1612128645321" />
+    <state width="1301" height="184" key="GridCell.Tab.0.right" timestamp="1612128645321">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1301" height="184" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1612128645321" />
+    <state x="811" y="104" key="SettingsEditor" timestamp="1612057629297">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="811" y="104" key="SettingsEditor/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1612057629297" />
   </component>
 </project>
