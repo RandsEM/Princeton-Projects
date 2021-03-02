@@ -6,7 +6,7 @@ Author: Darren Yeung, Sophomore
 **Percolation**: Determines if a NxM matrix pecolates (having a path from top to bottom) and computes the percolation threshold through Monte-Carlo Simulation  
     -Uses disjoint set data structure and weighted union-find wihout path-compression  
     -Top and bottom dummy node to reduce runtime from O(N^2) to O(1) when checking if there is a connection
-    -Source files: Percolation.java PercolationStats.java PercolationVisualizer.java  
+     -Source files: Percolation.java PercolationStats.java PercolationVisualizer.java  
       
 **Collinear points**: Given a graph with distinct points, determines which points form a line of 4 or more points and reproduce those lines without duplicates.   
     -Uses quick-sort to sort the slopes in ascending order in order to compute all lines in O(N^2 Lg(n)) rather than O(N^4)  
