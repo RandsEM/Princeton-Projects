@@ -1,0 +1,10 @@
+want to know if there is some way where the team in question can win at least
+as many games as some other team
+    if found a way, that means team x is not mathematically eliminated
+
+if all edges coming from s are full, means not eliminated
+
+if some edges are not full, means team is eliminated
+
+
+why? -> read notebook
