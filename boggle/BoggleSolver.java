@@ -4,7 +4,6 @@
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.TrieSET;
 
 import java.util.HashSet;
 
@@ -13,7 +12,6 @@ import java.util.HashSet;
  */
 public class BoggleSolver {
     private static int requiredLength = 3;
-    private TrieSET dic;
     private TrieWithPrefixQuery tpq;
     private BoggleBoard currentBoard;
     private HashSet<String> currentAnswers;
@@ -23,10 +21,8 @@ public class BoggleSolver {
     // Initializes the data structure using the given array of strings as the dictionary.
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
     public BoggleSolver(String[] dictionary) {
-        this.dic = new TrieSET();
         this.tpq = new TrieWithPrefixQuery();
         for (int i = 0; i < dictionary.length; i++) {
-            this.dic.add(dictionary[i]);
             this.tpq.insert(dictionary[i]);
         }
 
@@ -82,6 +78,25 @@ public class BoggleSolver {
             return this.root;
         }
 
+        public boolean contains(String s) {
+            Node pointer = this.root;
+            for (int i = 0; i < s.length(); i++) {
+                if (pointer.getLinks()[s.charAt(i) - 65] == null) {
+                    return false;
+                }
+                pointer = pointer.getLinks()[s.charAt(i) - 65];
+            }
+            return pointer.isWord();
+        }
+
+
+        /**
+         * do need to recompute the prefix query at each step
+         * use the fact that only checking one letter more each recursive call
+         *
+         * @deprecated
+         */
+        @Deprecated
         public boolean validPrefix(String s) {
             // if hit null, then is no longer a prefix
             Node pointer = this.root;
@@ -117,7 +132,6 @@ public class BoggleSolver {
                 pointer = links[current - 65];
             }
             pointer.setWord(); // this should be fine
-
         }
 
         private static class Node {
@@ -154,54 +168,67 @@ public class BoggleSolver {
             for (int j = 0; j < board.cols(); j++) {
                 boolean[][] marked = new boolean[board.rows()][board.cols()];
                 StringBuilder sb = new StringBuilder(); // pass in an empty string
-                dfs(i, j, marked, sb);
+                dfs(i, j, marked, sb, this.tpq.root);
             }
         }
         return this.currentAnswers;
     }
 
-
-    // TODO: Eliminate calls when there is no prefix in the dictionary that matches
     // Not an infinite loop, if don't optimize, will take forever
-    private void dfs(int row, int col, boolean[][] marked, StringBuilder current) {
+    private void dfs(int row, int col, boolean[][] marked, StringBuilder current,
+                     TrieWithPrefixQuery.Node node) {
         marked[row][col] = true;
         boolean q = false;
         if (this.currentBoard.getLetter(row, col) == 'Q') {
             q = true;
             current.append("" + this.currentBoard.getLetter(row, col) + 'U');
+            if (node.getLinks()['Q' - 65] == null) {
+                unmark(row, col, marked, current, true);
+                return;
+            }
+            else {
+                node = node.getLinks()['Q' - 65];
+                if (node.getLinks()['U' - 65] == null) {
+                    unmark(row, col, marked, current, true);
+                    return;
+                }
+            }
+            // x2
+            node = node.getLinks()['U' - 65];
         }
         else {
             current.append(this.currentBoard.getLetter(row, col));
+            int index = current.charAt(current.length() - 1) - 65;
+            if (node.getLinks()[index] == null) {
+                unmark(row, col, marked, current, false);
+                return;
+            }
+            node = node.getLinks()[index];
         }
         // convert to string to add
         String sb = current.toString();
-        // System.out.println(current);
-        int index = current.charAt(current.length() - 1);
-        if (!this.tpq.validPrefix(sb)) {
-            unmark(row, col, marked, current, q);
-            return;
-        }
 
         // if word is in dictionary and >= 3 in length
-        if (sb.length() >= BoggleSolver.requiredLength && this.dic.contains(sb)) {
+        if (sb.length() >= BoggleSolver.requiredLength && node.isWord()) {
             this.currentAnswers.add(sb);
         }
+
         // perform recursive calls x axis, y axis, and diagonally
         int rowBound = this.numRows - 1;
         int colBound = this.numCols - 1;
         for (int i = col - 1; i <= col + 1; i++) { // take care of top and bottom row
             if (isValid(row - 1, i, rowBound, colBound, marked)) {
-                dfs(row - 1, i, marked, current);
+                dfs(row - 1, i, marked, current, node);
             }
             if (isValid(row + 1, i, rowBound, colBound, marked)) {
-                dfs(row + 1, i, marked, current);
+                dfs(row + 1, i, marked, current, node);
             }
         }
         if (isValid(row, col - 1, rowBound, colBound, marked)) { // direct left
-            dfs(row, col - 1, marked, current);
+            dfs(row, col - 1, marked, current, node);
         }
         if (isValid(row, col + 1, rowBound, colBound, marked)) { // direct right
-            dfs(row, col + 1, marked, current);
+            dfs(row, col + 1, marked, current, node);
         }
         unmark(row, col, marked, current, q);
     }
@@ -209,7 +236,7 @@ public class BoggleSolver {
     // Returns the score of the given word if it is in the dictionary, zero otherwise.
     // (You can assume the word contains only the uppercase letters A through Z.)
     public int scoreOf(String word) {
-        if (!this.dic.contains(word) || word.length() < 3) {
+        if (!this.tpq.contains(word) || word.length() < 3) {
             return 0;
         }
         if (word.length() == 3 || word.length() == 4) {
