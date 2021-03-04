@@ -2,6 +2,8 @@
  *  Name: Darren
  **************************************************************************** */
 
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.TrieSET;
 
 import java.util.HashSet;
@@ -12,6 +14,7 @@ import java.util.HashSet;
 public class BoggleSolver {
     private static int requiredLength = 3;
     private TrieSET dic;
+    private TrieWithPrefixQuery tpq;
     private BoggleBoard currentBoard;
     private HashSet<String> currentAnswers;
     private int numRows;
@@ -21,8 +24,122 @@ public class BoggleSolver {
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
     public BoggleSolver(String[] dictionary) {
         this.dic = new TrieSET();
+        this.tpq = new TrieWithPrefixQuery();
         for (int i = 0; i < dictionary.length; i++) {
             this.dic.add(dictionary[i]);
+            this.tpq.insert(dictionary[i]);
+        }
+
+        /*
+            TrieWithPrefixQuery.Node[] array = tpq.getRoot().getLinks();
+            String test = "QUE";
+            TrieWithPrefixQuery.Node[] pointer = array;
+            for (int i = 0; i < test.length(); i++) {
+                System.out.println(pointer[test.charAt(i) - 65]);
+                pointer = pointer[test.charAt(i) - 65].getLinks();
+            }
+            System.out.println(pointer[0]);
+            System.out.println(tpq.validPrefix(test));
+         */
+    }
+
+    /*
+     * Helper method to un-mark and remove letter at the end of string builder
+     */
+    private static void unmark(int row, int col, boolean[][] marked, StringBuilder sb, boolean q) {
+        marked[row][col] = false;
+        sb.deleteCharAt(sb.length() - 1);
+        if (q) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+    }
+
+    /*
+     * Helper method to check  if should dfs into this node
+     */
+    private static boolean isValid(int row, int col, int rBounds, int cBounds, boolean[][] marked) {
+        // check in bounds
+        if (row < 0 || row > rBounds || col < 0 || col > cBounds) {
+            return false;
+        }
+        if (marked[row][col]) { // if already visited, don't go
+            return false;
+        }
+        return true;
+    }
+
+    /*
+     * Helper class that implements the PrefixQuery method
+     */
+    private static class TrieWithPrefixQuery {
+        private Node root;
+
+        public TrieWithPrefixQuery() {
+            this.root = new Node();
+        }
+
+        public Node getRoot() {
+            return this.root;
+        }
+
+        public boolean validPrefix(String s) {
+            // if hit null, then is no longer a prefix
+            Node pointer = this.root;
+            for (int i = 0; i < s.length(); i++) {
+                if (pointer.getLinks()[s.charAt(i) - 65] == null) {
+                    return false;
+                }
+                else {
+                    pointer = pointer.getLinks()[s.charAt(i) - 65];
+                }
+                if (s.charAt(i) == 'Q') {
+                    // need to check again
+                    if (pointer.getLinks()['U' - 65] == null) {
+                        return false;
+                    }
+                    else {
+                        pointer = pointer.getLinks()['U' - 65];
+                        i++;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public void insert(String s) {
+            Node pointer = this.root;
+            for (int i = 0; i < s.length(); i++) {
+                char current = s.charAt(i);
+                Node[] links = pointer.getLinks();
+                if (links[current - 65] == null) {
+                    links[current - 65] = new Node();
+                }
+                pointer = links[current - 65];
+            }
+            pointer.setWord(); // this should be fine
+
+        }
+
+        private static class Node {
+            private Node[] links;
+            private boolean isWord;
+
+            public Node() {
+                this.links = new Node[26];
+                this.isWord = false;
+            }
+
+            public Node[] getLinks() {
+                return this.links;
+            }
+
+            public void setWord() {
+                this.isWord = true;
+            }
+
+            public boolean isWord() {
+                return this.isWord;
+            }
         }
     }
 
@@ -43,10 +160,28 @@ public class BoggleSolver {
         return this.currentAnswers;
     }
 
+
+    // TODO: Eliminate calls when there is no prefix in the dictionary that matches
+    // Not an infinite loop, if don't optimize, will take forever
     private void dfs(int row, int col, boolean[][] marked, StringBuilder current) {
         marked[row][col] = true;
-        current.append(this.currentBoard.getLetter(row, col));
+        boolean q = false;
+        if (this.currentBoard.getLetter(row, col) == 'Q') {
+            q = true;
+            current.append("" + this.currentBoard.getLetter(row, col) + 'U');
+        }
+        else {
+            current.append(this.currentBoard.getLetter(row, col));
+        }
+        // convert to string to add
         String sb = current.toString();
+        // System.out.println(current);
+        int index = current.charAt(current.length() - 1);
+        if (!this.tpq.validPrefix(sb)) {
+            unmark(row, col, marked, current, q);
+            return;
+        }
+
         // if word is in dictionary and >= 3 in length
         if (sb.length() >= BoggleSolver.requiredLength && this.dic.contains(sb)) {
             this.currentAnswers.add(sb);
@@ -54,7 +189,7 @@ public class BoggleSolver {
         // perform recursive calls x axis, y axis, and diagonally
         int rowBound = this.numRows - 1;
         int colBound = this.numCols - 1;
-        for (int i = col - 1; i <= row + 1; i++) { // take care of top and bottom row
+        for (int i = col - 1; i <= col + 1; i++) { // take care of top and bottom row
             if (isValid(row - 1, i, rowBound, colBound, marked)) {
                 dfs(row - 1, i, marked, current);
             }
@@ -68,31 +203,13 @@ public class BoggleSolver {
         if (isValid(row, col + 1, rowBound, colBound, marked)) { // direct right
             dfs(row, col + 1, marked, current);
         }
-
-        // un-mark and remove last char from string builder
-        current.deleteCharAt(current.length() - 1);
-        marked[row][col] = false;
+        unmark(row, col, marked, current, q);
     }
-
-    /*
-     * Helper method to check  if should dfs into this node
-     */
-    private boolean isValid(int row, int col, int rBounds, int cBounds, boolean[][] marked) {
-        // check in bounds
-        if (row < 0 || row > rBounds || col < 0 || col > cBounds) {
-            return false;
-        }
-        if (!marked[row][col]) { // check not already visited
-            return false;
-        }
-        return true;
-    }
-
 
     // Returns the score of the given word if it is in the dictionary, zero otherwise.
     // (You can assume the word contains only the uppercase letters A through Z.)
     public int scoreOf(String word) {
-        if (!this.dic.contains(word)) {
+        if (!this.dic.contains(word) || word.length() < 3) {
             return 0;
         }
         if (word.length() == 3 || word.length() == 4) {
@@ -113,6 +230,15 @@ public class BoggleSolver {
     }
 
     public static void main(String[] args) {
-
+        In in = new In(args[0]);
+        String[] dictionary = in.readAllStrings();
+        BoggleSolver solver = new BoggleSolver(dictionary);
+        BoggleBoard board = new BoggleBoard(args[1]);
+        int score = 0;
+        for (String word : solver.getAllValidWords(board)) {
+            StdOut.println(word);
+            score += solver.scoreOf(word);
+        }
+        StdOut.println("Score = " + score);
     }
 }
