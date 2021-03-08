@@ -36,11 +36,11 @@ compute shortest distances and their shortest ancestral path
     -Source files: SeamCarver.java
 
 **Baseball Elimination Problem**: Given a set of teams, information about their win/loss count, and their remaining games against each other, 
-determine which teams are mathematically eliminated and provide the teams that proves this
-    -Represent the teams and their remaining games as the max-flow min-cut problem (Dual Problems!)
-    -Source -> Game Verticies (without X) -> Team Verticies (without X) -> Sink where X is the team in question
-    -Use Fork Fulkerson to compute the max flow
-    -If edges from source are full, team X is not eliminated, else, X is eliminated
+determine which teams are mathematically eliminated and provide the teams that proves this <br />
+    -Represent the teams and their remaining games as the max-flow min-cut problem (Dual Problems!) <br />
+    -Source -> Game Verticies (without X) -> Team Verticies (without X) -> Sink where X is the team in question <br />
+    -Use Fork Fulkerson to compute the max flow <br />
+    -If edges from source are full, team X is not eliminated, else, X is eliminated <br />
     -Source files: BaseballElimination.java
 
 **Boggle Game Solver**: Given a dictionary and a nXn board of letters, find all words in the dictionary that can be constructed 
