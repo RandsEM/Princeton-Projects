@@ -48,11 +48,11 @@ from a path on the board using only a sequence "King" moves (left, right, top, d
     -Fundemental key to this problem is to use DFS but to unmark the letter after the end of the recursive call <br />
     -DFS starting from every single letter to the rest of the board <br />
     -Key Optimization:
-      -During the current DFS path, if we find out that there doesn't exist a prefix in the dictionary, we do not look further <br />
+        -During the current DFS path, if we find out that there doesn't exist a prefix in the dictionary, we do not look further <br />
     -Other optimizations to get full credit: 
-      -Memory usage is too big. Board only contains {A...Z} so implement own 26 way trie 
-      -Further time improvements made by taking out repeated containSuffix() method 
-        -Since we are looking at one character further at a time, we just need to keep track of the current trie node and check for null 
+        -Memory usage is too big. Board only contains {A...Z} so implement own 26 way trie 
+        -Further time improvements made by taking out repeated containSuffix() method 
+            -Since we are looking at one character further at a time, we just need to keep track of the current trie node and check for null 
    
 
 
