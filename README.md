@@ -29,9 +29,9 @@ compute shortest distances and their shortest ancestral path
     -Computes the outdegrees to check if graph is rooted (one root only)  
     -Source files: WordNet.java SAP.java Digraph.java   
     
-**Seam Carver**: Given an image, resize the image by removing vertical and horizontal seams while perserving maximum information
-    -Computes mathematical energy functions for each pixel related to its neighbors 
-    -Computes the shortest energy path from top to bottom or left to right using topological sort 
+**Seam Carver**: Given an image, resize the image by removing vertical and horizontal seams while perserving maximum information <br />
+    -Computes mathematical energy functions for each pixel related to its neighbors <br />
+    -Computes the shortest energy path from top to bottom or left to right using topological sort <br />
     -Topological sort is utilized for computing the shortest path problem because the image is an edge weighted DAG (Directed Acyclic Graph)
     -Source files: SeamCarver.java
 
