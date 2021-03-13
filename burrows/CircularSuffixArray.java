@@ -30,6 +30,9 @@ public class CircularSuffixArray {
 
     // circular suffix array of s
     public CircularSuffixArray(String s) {
+        if (s == null) {
+            throw new IllegalArgumentException();
+        }
         this.string = s;
         // compute all prefix and enter
         this.suffixes = new Suffix[s.length()];
@@ -107,6 +110,9 @@ public class CircularSuffixArray {
 
     // returns index of ith sorted suffix
     public int index(int i) {
+        if (i < 0 || i >= this.string.length()) {
+            throw new IllegalArgumentException();
+        }
         return this.indexies.get(this.suffixes[i]);
     }
 
@@ -130,10 +136,10 @@ public class CircularSuffixArray {
     public static void main(String[] args) {
         String lmao = "ABRACADABRA!";
         CircularSuffixArray csa = new CircularSuffixArray(lmao);
-        for (CircularSuffixArray.Suffix suff : csa.suffixes) {
-            System.out.println(CircularSuffixArray.printSuffix(suff));
+        for (int i = 0; i < lmao.length(); i++) {
+            System.out.println(csa.index(i));
         }
-        System.out.println(csa.index(11));
+        System.out.println(csa.length());
     }
 }
 

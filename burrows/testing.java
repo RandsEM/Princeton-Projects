@@ -4,16 +4,10 @@
  *  Description:
  **************************************************************************** */
 
-import java.util.Arrays;
-
 public class testing {
     public static void main(String[] args) {
-        StringBuilder[] array = new StringBuilder[2];
-        array[0] = new StringBuilder("Jew");
-        array[1] = new StringBuilder("Ass");
-        Arrays.sort(array);
-        for (StringBuilder s : array) {
-            System.out.println(s);
-        }
+        int[] array = new int[256];
+        array['A'] = 10;
+        System.out.println(array[65]);
     }
 }
