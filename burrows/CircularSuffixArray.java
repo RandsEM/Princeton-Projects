@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 /* *****************************************************************************
  *  Name: Darren
  *  Date:
@@ -8,20 +6,14 @@ import java.util.HashMap;
 public class CircularSuffixArray {
     private String string;
     private Suffix[] suffixes;
-    private HashMap<Suffix, Integer> indexies; // stores the index before sorting
 
     private static class Suffix {
-        private String string;
         private int start; // don't want to generate new string, keep the start
 
-        public Suffix(String string, int start) {
-            this.string = string;
+        public Suffix(int start) {
             this.start = start;
         }
 
-        public String getString() {
-            return this.string;
-        }
 
         public int getStart() {
             return this.start;
@@ -36,13 +28,11 @@ public class CircularSuffixArray {
         this.string = s;
         // compute all prefix and enter
         this.suffixes = new Suffix[s.length()];
-        this.indexies = new HashMap<Suffix, Integer>();
         for (int i = 0; i < s.length(); i++) {
-            Suffix current = new Suffix(s, i);
+            Suffix current = new Suffix(i);
             this.suffixes[i] = current;
-            this.indexies.put(current, i);
         }
-        CircularSuffixArray.sort(this.suffixes, 0, s.length() - 1, 0, s.length());
+        CircularSuffixArray.sort(this.suffixes, 0, s.length() - 1, 0, s.length(), s);
     }
 
     private static int charAt(String s, int current) {
@@ -58,13 +48,13 @@ public class CircularSuffixArray {
         a[second] = saved;
     }
 
-    private static void sort(Suffix[] a, int lo, int hi, int current, int stringLength) {
+    private static void sort(Suffix[] a, int lo, int hi, int current, int stringLength, String s) {
         if (hi <= lo) {
             return;
         }
         int lessThan = lo;
         int greaterThan = hi;
-        String part = a[lo].getString();
+        String part = s;
         int partition;
         if (current + a[lo].getStart() >= stringLength) {
             partition = charAt(part, current + a[lo].getStart() - stringLength);
@@ -74,7 +64,7 @@ public class CircularSuffixArray {
         }
         int i = lo + 1;
         while (i <= greaterThan) {
-            String currentString = a[i].getString();
+            String currentString = s;
             int c;
             if (current + a[i].getStart() >= stringLength) {
                 c = charAt(currentString, current + a[i].getStart() - stringLength);
@@ -95,11 +85,11 @@ public class CircularSuffixArray {
                 i++;
             }
         }
-        sort(a, lo, lessThan - 1, current, stringLength);
+        sort(a, lo, lessThan - 1, current, stringLength, s);
         if (partition >= 0) {
-            sort(a, lessThan, greaterThan, current + 1, stringLength);
+            sort(a, lessThan, greaterThan, current + 1, stringLength, s);
         }
-        sort(a, greaterThan + 1, hi, current, stringLength);
+        sort(a, greaterThan + 1, hi, current, stringLength, s);
     }
 
 
@@ -113,9 +103,10 @@ public class CircularSuffixArray {
         if (i < 0 || i >= this.string.length()) {
             throw new IllegalArgumentException();
         }
-        return this.indexies.get(this.suffixes[i]);
+        return this.suffixes[i].getStart();
     }
 
+    /*
     private static String printSuffix(Suffix s) {
         StringBuilder sb = new StringBuilder();
         if (s.getStart() == 0) {
@@ -131,6 +122,7 @@ public class CircularSuffixArray {
         }
         return sb.toString();
     }
+     */
 
     // unit testing (required)
     public static void main(String[] args) {
