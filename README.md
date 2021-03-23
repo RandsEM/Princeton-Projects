@@ -4,7 +4,7 @@ Programming assignments from the Algorithms 1 & 2 hosted by Princeton University
 
 Author: Darren Yeung, Sophomore CS Student
 
-**Percolation**: Determines if a NxM matrix pecolates (having a path from top to bottom) and computes the percolation threshold through Monte-Carlo Simulation  
+*Percolation*: Determines if a NxM matrix pecolates (having a path from top to bottom) and computes the percolation threshold through Monte-Carlo Simulation  
 - Uses disjoint set data structure and weighted union-find wihout path-compression  
 - Top and bottom dummy node to reduce runtime from O(N^2) to O(1) when checking if there is a connection
 - Source files: Percolation.java PercolationStats.java PercolationVisualizer.java  
