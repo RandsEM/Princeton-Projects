@@ -1,6 +1,6 @@
 # Princeton-Projects
 Programming assignments from the Algorithms 1 & 2 hosted by Princeton University
-All assignments were completed with a score of 100/100. 
+All assignments were completed with a score of 100/100. Completed from Summer 2020 - March 2021
 
 Author: Darren Yeung, Sophomore CS Student
 
@@ -54,17 +54,28 @@ from a path on the board using only a sequence "King" moves (left, right, top, d
     - Memory usage is too big. Board only contains {A...Z} so implement own 26 way trie 
     - Further time improvements made by taking out repeated containSuffix() method 
     - Since we are looking at one character further at a time, we just need to keep track of the current trie node and check for null 
--Source Files: 
+-Source Files: BoggleBoard.java BoggleSolver.java
 
 **Burrows Wheeler Compression**: 3 Part project that compresses and uncompresses binary sequences with loss-less data compression. 
 - Burrows Wheeler Transform 
     - Need to write the circular suffix array class that sorts the N suffixes of a string of length N
-    - Does not generage N new strings for that will take O(X^2) characters for space complexity. Quadratic space is no go so a nested class it utilized that stores the start index of the original string for each rotation. 
+        - Does not generate N new strings for that will take O(X^2) characters for space complexity. Quadratic space is no go so a nested class is utilized that stores the start 
+    index of the original string for each rotation. 
+        - Sorts the suffixes using 3-way String Quicksort (Combination of MSD and 3-Way Quicksort). Does not have to re-examine the whole key for more efficient sorting
     - The Burrows Wheeler Transform is the last column of characters in the sorted circular suffix array with the original index that the string appears in
         - Goal of this transform is to bring sequences that contain identical characters closer together 
-    - 
-- Move to front encoding
-- Huffman Compression
+    - Burrows Wheeler Inverse Transform 
+        - Converting back to the original string requires the next array whereby if j is position of the original suffix that appears in row i of the sorted suffix array, next[i] = row in the sorted order where j + 1 appears 
+        - For characters that appear more than once, if i < j, then next[i] must be < next[j]
+            - Because of characters that occur more than once, we build the next[] array by key-indexed counting
+- Move to front encoding and decoding 
+    - Given a sequence of characters where equal characters appear near each other many times, move to front encoding will result in output of many small intergers which will then be ripe for the huffman compression algorithm 
+    - Maintain an ordered representation of the 256 Ascii Sequence, read in a character from input one by one, and print the index in the ordered sequence where it occurs. Then move that character to the front. 
+    - Decoding: Ordered sequence of 256 Ascii characters once again, read an integer i from input (0 - 255), write the ith character in the sequence and move to the front.
+    - Time Complexity = O(RN) where R is the radix and N is the length of the input
+- Huffman Compression (Only part that compresses the file)
+    - Assignment does not including writing this part. Class is provided in Algs4.jar named Huffman.java
+- Source files: MoveToFront.java CircularSuffix.java BurrowsWheeler.java Huffman.java
    
 
     
