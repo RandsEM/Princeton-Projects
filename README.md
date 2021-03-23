@@ -1,6 +1,6 @@
 # Princeton-Projects
-Programming assignments from the Algorithms 1 & 2 hosted by Princeton University
-All assignments were completed with a score of 100/100. Completed from Summer 2020 - March 2021
+Programming assignments from the Algorithms 1 & 2 hosted by Princeton University <br />
+All assignments were completed with a score of 100/100. Completed from Summer 2020 - March 2021 <br />
 
 Author: Darren Yeung, Sophomore CS Student
 
