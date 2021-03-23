@@ -59,7 +59,10 @@ from a path on the board using only a sequence "King" moves (left, right, top, d
 **Burrows Wheeler Compression**: 3 Part project that compresses and uncompresses binary sequences with loss-less data compression. 
 - Burrows Wheeler Transform 
     - Need to write the circular suffix array class that sorts the N suffixes of a string of length N
-    - Does not generage N new strings for that will take O(X^2) characters for space complexity. Quadratic space is no go so a nested class it utilized that stores the start index of the original string 
+    - Does not generage N new strings for that will take O(X^2) characters for space complexity. Quadratic space is no go so a nested class it utilized that stores the start index of the original string for each rotation. 
+    - The Burrows Wheeler Transform is the last column of characters in the sorted circular suffix array with the original index that the string appears in
+        - Goal of this transform is to bring sequences that contain identical characters closer together 
+    - 
 - Move to front encoding
 - Huffman Compression
    
