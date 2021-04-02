@@ -84,7 +84,6 @@ public class FastCollinearPoints {
                 }
             }
         }
-        // StdOut.print("faggot"); no infinite loop
     }
 
     public int numberOfSegments() {
